@@ -1,0 +1,9 @@
+{
+  "name": "dry-codes",
+  "description": "Reuse before you write. Bundles the dry-codes skill + the hosted Dry Codes public-corpus MCP server (/mcp/public) so any agent can search indexed public code/docs for an existing implementation before writing a new one.",
+  "version": "0.1.0",
+  "author": { "name": "quotentiroler" },
+  "homepage": "https://dry.codes",
+  "repository": "https://github.com/quotentiroler/dry-codes-plugin",
+  "license": "MIT"
+}
