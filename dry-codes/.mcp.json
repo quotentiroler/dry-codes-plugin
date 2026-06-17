@@ -2,7 +2,7 @@
   "mcpServers": {
     "dry-codes": {
       "type": "http",
-      "url": "https://dry.codes/mcp/public"
+      "url": "https://dry.codes/mcp"
     }
   }
 }

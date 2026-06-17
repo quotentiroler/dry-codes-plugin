@@ -1,15 +1,17 @@
 # Dry Codes — Claude Code & Codex plugin
 
-Reuse before you write. This plugin gives a coding agent a skill that searches the
-**Dry Codes public corpus** for existing code and docs to reuse — so it looks for an
-existing implementation before writing a new one.
+Reuse before you write. This plugin gives a coding agent a skill that searches
+**Dry Codes** for existing code and docs to reuse — so it looks for an existing
+implementation before writing a new one.
 
 It bundles two things:
 
 - **The `dry-codes` skill** — tells the agent to search Dry Codes before implementing,
   reuse matches, and check for near-duplicates.
-- **The hosted MCP server** — `https://dry.codes/mcp/public`, the read-only public
-  corpus (every repo the community has listed publicly). Zero config, no token.
+- **The hosted MCP server** — `https://dry.codes/mcp`. On first use you sign in (GitHub
+  OAuth) and pick which corpus to search: **one of your own endpoints**, or the
+  **public corpus** (every repo listed publicly on Dry Codes). To switch later,
+  reconnect and pick another.
 
 ## Install — Claude Code
 
@@ -32,18 +34,21 @@ and install the `dry-codes` plugin. (Codex reads `.agents/plugins/marketplace.js
 from the repo; the bundled skill goes into Codex and the `dry-codes` MCP server is
 configured automatically.)
 
-## Searching your OWN repositories
+## Which corpus does it search?
 
-This plugin connects to the **public** corpus only. To search your own private
-repositories — and get your account's `semantic_search` (Pro and up) — connect your
-account's endpoint from the dashboard at **https://dry.codes** (it gives you a
-per-endpoint MCP URL + an install one-liner; add it as an extra MCP server). A
-first-class per-account plugin (OAuth) is tracked as a follow-up.
+On the first connection Dry Codes shows a picker:
+
+- **Your own endpoints** — your indexed repositories (and Pro features like
+  `semantic_search`), grouped by account/team. Manage them at https://dry.codes.
+- **Public corpus** — every repo listed publicly on Dry Codes (read-only).
+
+The choice is bound to that connection. To search a different endpoint, reconnect and
+pick another (or add a second MCP server for a specific endpoint URL from the dashboard).
 
 ## Layout
 
 This one repo is both a Claude Code marketplace and a Codex marketplace, sharing one
-skill + the same public MCP URL:
+skill + the same OAuth MCP URL:
 
 ```
 .claude-plugin/marketplace.json     # Claude Code marketplace

@@ -10,9 +10,10 @@ indexed repositories. It indexes both **code** and **docs** (READMEs, ADRs, guid
 and finds them by text and by meaning. Your job is to *reuse what already exists* —
 code, conventions, and decisions — rather than regenerate it.
 
-This plugin connects to the **public corpus** (`https://dry.codes/mcp/public`): every
-repository the community has listed publicly on Dry Codes. To search your OWN private
-repositories, connect your account's endpoint instead (see https://dry.codes).
+On first use this plugin signs you in (GitHub OAuth) and lets you pick which corpus to
+search — one of **your own** Dry Codes endpoints, or the **public corpus** (every repo
+listed publicly on Dry Codes). To switch later, reconnect and pick another. Manage your
+endpoints at https://dry.codes.
 
 Use whatever Dry Codes tools your endpoint exposes; `semantic_search` appears on
 Pro and up, and `search_code` / `dry_wand` cover the rest on every plan.
