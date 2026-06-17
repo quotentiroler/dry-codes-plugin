@@ -17,7 +17,7 @@ It bundles two things:
 
 ```
 /plugin marketplace add quotentiroler/dry-codes-plugin
-/plugin install dry-codes@dry-codes-plugin
+/plugin install dry-codes@quotentiroler
 ```
 
 Then restart Claude Code (or `/reload-plugins`). Try it locally first with
@@ -29,12 +29,12 @@ Two steps: register the marketplace, then install the plugin from it.
 
 ```
 codex plugin marketplace add quotentiroler/dry-codes-plugin
-codex plugin add dry-codes@dry-codes
+codex plugin add dry-codes@quotentiroler
 ```
 
 `marketplace add` only registers the source; `plugin add` is what installs the plugin
-(`dry-codes@dry-codes` = the `dry-codes` plugin from the `dry-codes` marketplace — run
-`codex plugin list` if you need the exact selector). Prefer the UI? Skip the second
+(`dry-codes@quotentiroler` = the `dry-codes` plugin from the `quotentiroler` marketplace
+— run `codex plugin list` if you need the exact selector). Prefer the UI? Skip the second
 command, open Codex's plugin directory, choose the **Dry Codes** marketplace, and
 install `dry-codes`.
 
