@@ -1,0 +1,20 @@
+{
+  "name": "dry-codes",
+  "interface": {
+    "displayName": "Dry Codes"
+  },
+  "plugins": [
+    {
+      "name": "dry-codes",
+      "source": {
+        "source": "local",
+        "path": "./dry-codes"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_FIRST_USE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
