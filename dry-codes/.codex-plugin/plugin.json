@@ -15,6 +15,9 @@
     "longDescription": "Searches the Dry Codes public corpus (a hosted MCP server) for existing code and docs to reuse, and flags near-duplicates — so Codex looks for an implementation before writing one.",
     "developerName": "quotentiroler",
     "category": "Productivity",
-    "websiteURL": "https://dry.codes"
+    "websiteURL": "https://dry.codes",
+    "brandColor": "#3fb950",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png"
   }
 }

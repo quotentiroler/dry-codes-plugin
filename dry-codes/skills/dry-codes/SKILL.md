@@ -1,6 +1,12 @@
 ---
 name: dry-codes
 description: Reuse existing code instead of writing it twice. Use BEFORE implementing any new function, component, utility, type, endpoint, hook, or module — query the Dry Codes MCP to find an existing implementation to reuse, and check for near-duplicates before finishing. Also a searchable knowledge base over code AND docs (READMEs, ADRs, conventions) — search it for prior decisions and patterns before writing. Triggers when about to write new code, "implement X", "add a helper/util", "create a component", refactoring toward reuse, or whenever following DRY (Don't Repeat Yourself).
+interface:
+  display_name: "Dry Codes"
+  short_description: "Reuse before you write — search indexed code & docs."
+  icon_small: "./assets/icon.png"
+  icon_large: "./assets/logo.svg"
+  brand_color: "#3fb950"
 ---
 
 # Dry Codes — reuse before you write
