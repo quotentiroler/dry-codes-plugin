@@ -1,6 +1,7 @@
 {
-  "mcp_servers": {
+  "mcpServers": {
     "dry-codes": {
+      "type": "http",
       "url": "https://dry.codes/mcp"
     }
   }
