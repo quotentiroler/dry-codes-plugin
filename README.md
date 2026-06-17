@@ -25,14 +25,22 @@ Then restart Claude Code (or `/reload-plugins`). Try it locally first with
 
 ## Install — Codex
 
+Two steps: register the marketplace, then install the plugin from it.
+
 ```
 codex plugin marketplace add quotentiroler/dry-codes-plugin
+codex plugin add dry-codes@dry-codes
 ```
 
-Then restart Codex, open the plugin directory, choose the **Dry Codes** marketplace,
-and install the `dry-codes` plugin. (Codex reads `.agents/plugins/marketplace.json`
-from the repo; the bundled skill goes into Codex and the `dry-codes` MCP server is
-configured automatically.)
+`marketplace add` only registers the source; `plugin add` is what installs the plugin
+(`dry-codes@dry-codes` = the `dry-codes` plugin from the `dry-codes` marketplace — run
+`codex plugin list` if you need the exact selector). Prefer the UI? Skip the second
+command, open Codex's plugin directory, choose the **Dry Codes** marketplace, and
+install `dry-codes`.
+
+Codex reads `.agents/plugins/marketplace.json` from the repo; the bundled skill goes
+into Codex and the `dry-codes` MCP server is configured automatically. Restart Codex
+after installing.
 
 ## Which corpus does it search?
 
