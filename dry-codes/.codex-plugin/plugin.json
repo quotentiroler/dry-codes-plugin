@@ -1,7 +1,7 @@
 {
   "name": "dry-codes",
   "version": "0.1.0",
-  "description": "Reuse before you write. Bundles the dry-codes skill + the hosted Dry Codes public-corpus MCP server (/mcp/public) so Codex searches indexed public code/docs for an existing implementation before writing a new one.",
+  "description": "Reuse before you write. Bundles the dry-codes skill + the hosted DRY.codes public-corpus MCP server (/mcp/public) so Codex searches indexed public code/docs for an existing implementation before writing a new one.",
   "author": { "name": "quotentiroler", "url": "https://dry.codes" },
   "homepage": "https://dry.codes",
   "repository": "https://github.com/quotentiroler/dry-codes-plugin",
@@ -10,9 +10,9 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.codex.json",
   "interface": {
-    "displayName": "Dry Codes",
+    "displayName": "DRY.codes",
     "shortDescription": "Reuse before you write — search indexed public code & docs.",
-    "longDescription": "Searches the Dry Codes public corpus (a hosted MCP server) for existing code and docs to reuse, and flags near-duplicates — so Codex looks for an implementation before writing one.",
+    "longDescription": "Searches the DRY.codes public corpus (a hosted MCP server) for existing code and docs to reuse, and flags near-duplicates — so Codex looks for an implementation before writing one.",
     "developerName": "quotentiroler",
     "category": "Productivity",
     "websiteURL": "https://dry.codes",

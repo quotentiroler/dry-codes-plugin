@@ -1,16 +1,16 @@
-# Dry Codes — Claude Code & Codex plugin
+# DRY.codes — Claude Code & Codex plugin
 
 Reuse before you write. This plugin gives a coding agent a skill that searches
-**Dry Codes** for existing code and docs to reuse — so it looks for an existing
+**DRY.codes** for existing code and docs to reuse — so it looks for an existing
 implementation before writing a new one.
 
 It bundles two things:
 
-- **The `dry-codes` skill** — tells the agent to search Dry Codes before implementing,
+- **The `dry-codes` skill** — tells the agent to search DRY.codes before implementing,
   reuse matches, and check for near-duplicates.
 - **The hosted MCP server** — `https://dry.codes/mcp`. On first use you sign in (GitHub
   OAuth) and pick which corpus to search: **one of your own endpoints**, or the
-  **public corpus** (every repo listed publicly on Dry Codes). To switch later,
+  **public corpus** (every repo listed publicly on DRY.codes). To switch later,
   reconnect and pick another.
 
 ## Install — Claude Code
@@ -35,7 +35,7 @@ codex plugin add dry-codes@quotentiroler
 `marketplace add` only registers the source; `plugin add` is what installs the plugin
 (`dry-codes@quotentiroler` = the `dry-codes` plugin from the `quotentiroler` marketplace
 — run `codex plugin list` if you need the exact selector). Prefer the UI? Skip the second
-command, open Codex's plugin directory, choose the **Dry Codes** marketplace, and
+command, open Codex's plugin directory, choose the **DRY.codes** marketplace, and
 install `dry-codes`.
 
 Codex reads `.agents/plugins/marketplace.json` from the repo; the bundled skill goes
@@ -44,11 +44,11 @@ after installing.
 
 ## Which corpus does it search?
 
-On the first connection Dry Codes shows a picker:
+On the first connection DRY.codes shows a picker:
 
 - **Your own endpoints** — your indexed repositories (and Pro features like
   `semantic_search`), grouped by account/team. Manage them at https://dry.codes.
-- **Public corpus** — every repo listed publicly on Dry Codes (read-only).
+- **Public corpus** — every repo listed publicly on DRY.codes (read-only).
 
 The choice is bound to that connection. To search a different endpoint, reconnect and
 pick another (or add a second MCP server for a specific endpoint URL from the dashboard).

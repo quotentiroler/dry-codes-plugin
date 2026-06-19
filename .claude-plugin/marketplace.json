@@ -7,7 +7,7 @@
     {
       "name": "dry-codes",
       "source": "./dry-codes",
-      "description": "Reuse before you write — search the Dry Codes public corpus (hosted MCP) for existing code and docs to reuse, and catch near-duplicates. Bundles the dry-codes skill + the public /mcp/public server (zero config)."
+      "description": "Reuse before you write — search the DRY.codes public corpus (hosted MCP) for existing code and docs to reuse, and catch near-duplicates. Bundles the dry-codes skill + the public /mcp/public server (zero config)."
     }
   ]
 }

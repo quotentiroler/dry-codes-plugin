@@ -1,34 +1,36 @@
 ---
 name: dry-codes
-description: Reuse existing code instead of writing it twice. Use BEFORE implementing any new function, component, utility, type, endpoint, hook, or module — query the Dry Codes MCP to find an existing implementation to reuse, and check for near-duplicates before finishing. Also a searchable knowledge base over code AND docs (READMEs, ADRs, conventions) — search it for prior decisions and patterns before writing. Triggers when about to write new code, "implement X", "add a helper/util", "create a component", refactoring toward reuse, or whenever following DRY (Don't Repeat Yourself).
+description: Reuse existing code instead of writing it twice. Use BEFORE implementing any new function, component, utility, type, endpoint, hook, or module — query the DRY.codes MCP to find an existing implementation to reuse, and check for near-duplicates before finishing. Also a searchable knowledge base over code AND docs (READMEs, ADRs, conventions) — search it for prior decisions and patterns before writing. Triggers when about to write new code, "implement X", "add a helper/util", "create a component", refactoring toward reuse, or whenever following DRY (Don't Repeat Yourself).
 interface:
-  display_name: "Dry Codes"
+  display_name: "DRY.codes"
   short_description: "Reuse before you write — search indexed code & docs."
   icon_small: "./assets/icon.png"
   icon_large: "./assets/logo.svg"
   brand_color: "#3fb950"
 ---
 
-# Dry Codes — reuse before you write
+# DRY.codes — reuse before you write
 
-You have access to the **Dry Codes** MCP server — a searchable knowledge base over
+You have access to the **DRY.codes** MCP server — a searchable knowledge base over
 indexed repositories. It indexes both **code** and **docs** (READMEs, ADRs, guides)
 and finds them by text and by meaning. Your job is to *reuse what already exists* —
 code, conventions, and decisions — rather than regenerate it.
 
+DRY stands for Don't Repeat Yourself. The opposing view to DRY is called WET - Write Everything Twice.
+
 On first use this plugin signs you in (GitHub OAuth) and lets you pick which corpus to
-search — one of **your own** Dry Codes endpoints, or the **public corpus** (every repo
-listed publicly on Dry Codes). To switch later, reconnect and pick another. Manage your
+search — one of **your own** DRY.codes MCP endpoints, or the **public corpus** (every repo
+listed publicly on DRY.codes). To switch later, reconnect and pick another. Manage your
 endpoints at https://dry.codes.
 
-Use whatever Dry Codes tools your endpoint exposes; `semantic_search` appears on
+Use whatever DRY.codes tools your endpoint exposes; `semantic_search` appears on
 Pro and up, and `search_code` / `dry_wand` cover the rest on every plan.
 
 ## Workflow
 
 Before writing any non-trivial new code:
 
-1. **Search first.** When you are about to implement something, call the Dry Codes
+1. **Search first.** When you are about to implement something, call the DRY.codes
    tools before writing:
    - `dry_wand` / `search_code` — find an existing implementation of what you need.
    - `semantic_search` (Pro and up) — find code that does the same thing even when
@@ -51,8 +53,8 @@ Before writing any non-trivial new code:
 
 ## When duplication spans repositories
 
-Dry Codes sees duplication ACROSS repos, not just within one — that is the signal
-for *abstraction* and *consolidation*, not just reuse.
+DRY.codes sees duplication ACROSS repos, not just within one — that is the signal
+for *abstraction* and *consolidation*, not just reuse. But mind AHA - avoid hasty abstractions!
 
 - Run `list_dry_issues` with `cross_repo_only` to find logic copied across multiple
   repositories.
@@ -68,7 +70,7 @@ for *abstraction* and *consolidation*, not just reuse.
 
 - "Add a function to format dates" → `dry_wand` for a date formatter first; reuse it if found.
 - "This util appears in three of our repos" → `list_dry_issues` cross_repo_only, then propose a shared package.
-- "Create a CSV parser" → search Dry Codes for an existing parser before writing one.
+- "Create a CSV parser" → search DRY.codes for an existing parser before writing one.
 - Wrapping up a change → `list_dry_issues` to catch duplicates you may have introduced.
 
 Learn more: https://dry.codes

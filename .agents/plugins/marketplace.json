@@ -1,7 +1,7 @@
 {
   "name": "quotentiroler",
   "interface": {
-    "displayName": "Dry Codes"
+    "displayName": "DRY.codes"
   },
   "plugins": [
     {
