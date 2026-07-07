@@ -1,6 +1,15 @@
 ---
 name: dry-codes
-description: Reuse existing code instead of writing it twice. Use BEFORE implementing any new function, component, utility, type, endpoint, hook, or module — query the DRY.codes MCP to find an existing implementation to reuse, and check for near-duplicates before finishing. Also a searchable knowledge base over code AND docs (READMEs, ADRs, conventions) — search it for prior decisions, naming, and patterns before writing so you stay consistent. Chain several tool calls (search, then read, then compare, then check) rather than a single lookup. Triggers when about to write new code, "implement X", "add a helper/util", "create a component", refactoring toward reuse, or whenever following DRY (Don't Repeat Yourself).
+description: Reuse existing code instead of writing it twice. Use BEFORE implementing any new function, component, utility, type, endpoint, hook, or module — query the DRY.codes MCP to find an existing implementation to reuse, and check for near-duplicates before finishing. Also a searchable knowledge base over code AND docs (READMEs, ADRs, conventions) — search it for prior decisions, naming, and patterns before writing so you stay consistent. Do not stop at one lookup: chain many calls (search → read → compare → check), scaled to how large the indexed corpus is — a handful on a single small repo, 10-20+ across a large multi-repo corpus. Triggers when about to write new code, "implement X", "add a helper/util", "create a component", refactoring toward reuse, or whenever following DRY (Don't Repeat Yourself).
+license: MIT
+compatibility: "Requires the dry-codes MCP server (https://dry.codes/mcp), connected via GitHub OAuth. Reuse quality scales with how much code and docs you have indexed at https://dry.codes."
+argument-hint: "[what you are about to build]"
+allowed-tools:
+  - mcp__dry-codes
+  - mcp__plugin_dry-codes_dry-codes
+metadata:
+  version: "1.0.0"
+  homepage: "https://dry.codes"
 interface:
   display_name: "DRY.codes"
   short_description: "Reuse before you write — search indexed code & docs."
@@ -26,23 +35,41 @@ search: one of **your own** DRY.codes MCP endpoints, or the **public corpus** (p
 repos shared on DRY.codes). To switch later, reconnect and pick another. Manage your
 endpoints at https://dry.codes.
 
-## Chain your calls — one lookup is rarely enough
+## Use the tools extensively — one lookup is never enough
 
-A single search tells you little. The value comes from **chaining** tools: cast a wide
-net, READ the strongest hits, then CONFIRM with a second tool before you act. Treat each
-result as a lead for the next call, not a final answer. Typical chains:
+**Default to many calls, not few.** A single search tells you almost nothing; the reuse
+signal comes from *volume plus chaining*. For any real task, fire a burst: search by
+meaning AND by text, from several angles, then READ the hits and CONFIRM with a second tool
+before you act. Treat every result as a lead for the next call, never a final answer. When
+calls are independent (e.g. `semantic_search` + `dry_wand` + `search_code` for the same
+intent), issue them **in parallel** in one batch.
 
-- **Before writing** `semantic_search` or `dry_wand` to find candidates → READ the top
-  files → if two look close, `compare_files` to see how much they overlap → reuse the winner.
-- **Before deciding** `search_code` with `scope: docs` and `find_file` for an existing ADR,
-  README, or convention → follow it instead of re-deciding.
-- **Before consolidating** `list_dry_issues` + `list_semantic_dupes` (both with
-  `cross_repo_only`) → `compare_files` on the worst pairs to verify → propose ONE shared home.
-- **Before finishing** `list_dry_issues` and `list_semantic_dupes` again to catch any
-  near-duplicate you just introduced.
+**Scale the burst to the corpus, not to your patience.** Size the indexed corpus first
+(`list_files`, or `list_files` per `owner`) so you calibrate instead of guessing:
 
-If the first call is thin, widen it (lower `threshold`, raise `top_k`, try `scope: docs`,
-switch text↔meaning) before concluding nothing exists. Two or three focused calls beat one.
+- **Small, single indexed repo** → a handful of focused calls (roughly 3-6). Firing 20 at
+  a tiny corpus just re-scans the same files; stop once you have covered it.
+- **Large or multi-repo corpus** → go wide: **10-20+ calls**. More angles = more reuse
+  found. Search each owner/repo, both scopes (code + docs), text and meaning, and run the
+  duplication lists with and without `cross_repo_only`. Under-searching a big corpus is the
+  failure mode — you ship a duplicate that was already indexed three repos over.
+
+Typical chains (each is several calls, not one):
+
+- **Before writing** `semantic_search` + `dry_wand` + `search_code` (parallel) to find
+  candidates → READ the top files → if two look close, `compare_files` to measure overlap →
+  reuse the winner. Widen (lower `threshold`, raise `top_k`, more owners) if hits are thin.
+- **Before deciding** `search_code` with `scope: docs` and `find_file` across owners for an
+  existing ADR, README, or convention → follow it instead of re-deciding.
+- **Before consolidating** `list_dry_issues` + `list_semantic_dupes` + `list_duplicate_declarations`
+  (with and without `cross_repo_only`) → `compare_files` on the worst pairs to verify →
+  propose ONE shared home.
+- **Before finishing** re-run `list_dry_issues`, `list_semantic_dupes`, and
+  `list_duplicate_declarations` to catch any near-duplicate you just introduced.
+
+If the first call is thin, **widen and try again** (lower `threshold`, raise `top_k`, add
+`scope: docs`, switch text↔meaning, drop the `owner` filter) before concluding nothing
+exists. Concluding "nothing exists" after one or two calls is almost always wrong.
 
 ## The tools
 
@@ -68,6 +95,9 @@ Availability depends on your plan and endpoint; use whatever is exposed.
   SAME thing while reading differently, which the textual list cannot see. Same filters.
 - `compare_files` — pairwise overlap of the SPECIFIC files you name (full index paths like
   `acme/proxy-smart/src/auth.ts`). Use it to confirm a suspected duplicate before acting.
+- `list_duplicate_declarations` — repeated top-level declarations (same function/class/type
+  name defined in multiple places), the fastest way to spot a helper that already exists
+  under a name you were about to reinvent.
 - `list_unique_files` — the most ORIGINAL files (inverse of `list_dry_issues`). Good
   canonical implementations to reuse, and good seeds when extracting a shared module.
 
@@ -82,24 +112,31 @@ Scopes: pass `scope: docs` to search prose/ADRs, `scope: code` for source, `scop
 
 Before writing any non-trivial new code:
 
-1. **Search first, by meaning and by text.** `semantic_search` and/or `dry_wand` for an
-   existing implementation; `search_code` with `scope: docs` for an existing convention.
+0. **Size the corpus.** `list_files` (per `owner` if several) to learn how much is indexed,
+   so you scale the search burst to it — a few calls for one small repo, 10-20+ for a large
+   multi-repo corpus.
+1. **Search first, widely — by meaning and by text.** Fire `semantic_search`, `dry_wand`,
+   and `search_code` together for the implementation, plus `search_code` with `scope: docs`
+   for the convention. One angle is not enough.
 2. **Read and reuse the match.** If a close result exists, READ it and reuse it (import,
    call, extend, or adapt) instead of writing a parallel version. Cite the file you reused.
 3. **Stay consistent.** Match the naming, structure, and patterns you found, so you do not
    introduce a second style for the same thing.
-4. **Check before you finish.** Run `list_dry_issues` (and `list_semantic_dupes` on Pro) to
-   confirm you did not add a near-duplicate.
+4. **Check before you finish.** Run `list_dry_issues`, `list_semantic_dupes` (Pro), and
+   `list_duplicate_declarations` to confirm you did not add a near-duplicate.
 
 ## Guidelines
 
+- Search generously: a burst of DRY.codes calls is far cheaper than the tokens, review, and
+  long-term drift of a duplicate you could have reused. When unsure, search more, not less.
 - Reuse beats regenerate: it spends far fewer tokens and keeps the codebase DRY.
 - Prefer extending an existing utility over creating a second one that does the same job.
 - Only write new code when nothing suitable exists, then put it in ONE place so the next
   agent can reuse it too.
 - Search the docs before deciding: an ADR, README, or convention may already settle it.
-- Do not stop at the first search. Chain a confirming call (`compare_files`, a docs search,
-  a duplication check) before you conclude.
+- Do not stop at the first search. Chain confirming calls (`compare_files`, a docs search,
+  `list_duplicate_declarations`, a duplication check) before you conclude — one call is a
+  guess, several are a decision.
 
 ## When duplication spans repositories
 
@@ -118,9 +155,11 @@ evidence is real and repeated.
 
 ## Examples
 
-- "Add a function to format dates" → `semantic_search`/`dry_wand` for a date formatter →
-  read the hit → reuse it if found.
-- "Create a CSV parser" → `search_code` for a parser, then `compare_files` on the two
+- "Add a function to format dates" → fire `semantic_search` + `dry_wand` + `search_code`
+  together for a date formatter → read the top hits → `compare_files` on the closest two →
+  reuse the winner.
+- "Create a CSV parser" → `search_code` + `semantic_search` for a parser across owners →
+  `list_duplicate_declarations` for an existing `parseCsv` → `compare_files` on the two
   closest before writing one.
 - "Follow our API conventions" → `search_code` with `scope: docs` / `find_file` for the ADR
   before coding.
